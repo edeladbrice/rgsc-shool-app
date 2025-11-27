@@ -1,0 +1,272 @@
+/* ------------------------------------------------------------------- */
+/* 0. Variables CSS et Mode Sombre                                     */
+/* ------------------------------------------------------------------- */
+:root {
+  --primary-green: #4CAF50;
+  --dark-green: #2E7D32;
+  --white: #fff;
+  --red: #f44336;
+  --gray-light: #eee;
+  --gray-medium: #ccc;
+  
+  /* Variables pour le Thème */
+  --bg-color-main: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+  --text-color-main: var(--white);
+  --form-bg-color: var(--white);
+  --form-text-color: #333;
+  --form-title-color: var(--dark-green);
+  --input-border-color: var(--gray-medium);
+}
+
+/* Dark Mode Variables (géré par la classe 'dark-mode' sur <body>) */
+body.dark-mode {
+  --bg-color-main: linear-gradient(135deg, #121212 0%, #333 100%);
+  --text-color-main: var(--gray-light);
+  --form-bg-color: #212121;
+  --form-text-color: var(--gray-light);
+  --form-title-color: var(--primary-green);
+  --input-border-color: #444;
+}
+
+/* ------------------------------------------------------------------- */
+/* 1. Base et Layout                                                   */
+/* ------------------------------------------------------------------- */
+html, body {
+  height: 100%;
+  margin: 0;
+  /* Utilisation d'une police plus standard au cas où Montserrat n'est pas chargée */
+  font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  /* Utilisation des variables de thème */
+  background: var(--bg-color-main);
+  color: var(--text-color-main);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden; /* Empêche le défilement */
+  transition: background-color .5s, color .5s; /* Transition fluide entre les modes */
+}
+
+main {
+    display: contents; /* Permet aux enfants d'être positionnés directement dans le body flex */
+}
+
+/* ------------------------------------------------------------------- */
+/* 2. Messages d'Introduction                                          */
+/* ------------------------------------------------------------------- */
+.message {
+  font-size: 2.5em; /* Légèrement augmenté */
+  padding: 0 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  /* Utilisation d'un easing plus cinématographique */
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out; 
+  text-align: center;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(0,0,0,.5);
+}
+.message.show { opacity: 1; transform: translateY(0); }
+
+/* Média Query pour les petits écrans */
+@media (max-width: 600px) {
+  .message {
+    font-size: 1.8em;
+  }
+}
+
+/* ------------------------------------------------------------------- */
+/* 3. Boutons d'Action (call-to-action)                                */
+/* ------------------------------------------------------------------- */
+.call-to-action { 
+  display: flex; 
+  gap: 1.5rem; /* Augmenté */
+  margin-top: 3rem; 
+  opacity: 0; 
+  transform: translateY(20px); 
+  transition: opacity 1s, transform 1s; 
+}
+.call-to-action.show { opacity: 1; transform: translateY(0); }
+
+.btn {
+  padding: .8rem 2rem; /* Légèrement plus grand */
+  border: none;
+  border-radius: 50px; /* Pill-shaped buttons */
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .3s, box-shadow .3s, background-color .3s, color .3s;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.btn:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0,0,0,.4); /* Ombre plus prononcée */
+}
+
+.enter { 
+    background: var(--white); 
+    color: var(--primary-green);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.exit { 
+    background: var(--red); 
+    color: var(--white); 
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.5);
+}
+
+/* ------------------------------------------------------------------- */
+/* 4. Message Final (welcome-banner)                                   */
+/* ------------------------------------------------------------------- */
+.welcome-banner {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.95); /* Opacité plus sombre */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: var(--primary-green);
+  text-align: center;
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s, visibility 1s;
+  z-index: 100; /* Assure qu'il couvre tout */
+}
+.welcome-banner.show { opacity: 1; visibility: visible; }
+
+.welcome-banner h2 {
+    font-size: 4em;
+    margin: 0;
+    letter-spacing: 5px;
+    animation: pulse 1.5s infinite alternate; /* Ajout d'une animation */
+}
+.welcome-banner small {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: var(--white);
+}
+
+/* ------------------------------------------------------------------- */
+/* 5. Conteneur d'Authentification (auth-container)                    */
+/* ------------------------------------------------------------------- */
+.auth-container {
+  background: var(--form-bg-color);
+  color: var(--form-text-color);
+  padding: 3rem;
+  border-radius: 15px;
+  width: 400px; /* Légèrement plus large */
+  max-width: 90%;
+  box-shadow: 0 15px 40px rgba(0,0,0,.4); /* Ombre plus profonde */
+  
+  /* Animation 3D d'entrée */
+  transform: rotateY(90deg) scale(0.8);
+  opacity: 0;
+  transition: transform 1s cubic-bezier(.68,-.55,.27,1.55), opacity 1s; /* Transition ralentie */
+}
+.auth-container.show { 
+    transform: rotateY(0) scale(1); 
+    opacity: 1; 
+}
+
+.auth-container h2 { 
+    margin-top: 0; 
+    margin-bottom: 2rem; 
+    color: var(--form-title-color); 
+    text-align: center;
+}
+
+.auth-box {
+    /* Conteneur intérieur si besoin de centrer les messages */
+}
+
+/* ------------------------------------------------------------------- */
+/* 6. Formulaire (Form)                                                */
+/* ------------------------------------------------------------------- */
+form input {
+  width: 100%;
+  padding: .85rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--input-border-color);
+  border-radius: 8px;
+  font-size: 1em;
+  box-sizing: border-box; /* Assure que le padding n'augmente pas la largeur */
+  background-color: transparent; /* Pour le mode sombre */
+  color: var(--form-text-color);
+  transition: border-color .3s, background-color .3s;
+}
+
+form input:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.primary {
+  background: var(--primary-green);
+  color: var(--white);
+}
+
+.secondary {
+    background: transparent;
+    border: 1px solid var(--primary-green);
+    color: var(--primary-green);
+}
+.secondary:hover {
+    background: var(--primary-green);
+    color: var(--white);
+}
+
+.link-btn { /* Nouveau style pour le bouton 'Pas encore de compte ?' */
+  background: none;
+  color: var(--form-text-color);
+  border: none;
+  margin-top: 1.5rem;
+  font-size: 0.9em;
+  font-weight: 500;
+  text-decoration: underline;
+  width: auto;
+  padding: 0;
+  display: block;
+  text-align: center;
+  transition: color .3s;
+}
+.link-btn:hover {
+    color: var(--primary-green);
+    transform: none;
+    box-shadow: none;
+}
+
+/* ------------------------------------------------------------------- */
+/* 7. Autres Classes Utilitaires et Animations                         */
+/* ------------------------------------------------------------------- */
+.hidden { 
+    display: none !important; 
+    /* Le JS gère désormais l'affichage en retirant 'hidden' et en ajoutant 'show' */
+}
+
+#auth-status {
+    color: var(--red);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Keyframes pour l'animation de pulsation du message final */
+@keyframes pulse {
+    0% { transform: scale(1); text-shadow: 0 0 10px rgba(76, 175, 80, 0.8); }
+    100% { transform: scale(1.05); text-shadow: 0 0 20px rgba(76, 175, 80, 1); }
+}
