@@ -1,0 +1,1 @@
+# rgsc-shool-app
