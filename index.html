@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>RGSC – Connexion au Nouveau Monde</title>
+  <meta name="description" content="Bienvenue sur la plateforme RGSC. Connectez-vous pour entrer dans un monde nouveau.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="assets/css/login.css" as="style">
+  <link rel="stylesheet" href="assets/css/login.css">
+  
+  </head>
+<body>
+  <main class="introduction-screen">
+    <header class="logo">
+        <h1>RGSC</h1>
+    </header>
+
+    <div id="messages-container">
+      <p id="msg1" class="message active" aria-live="polite">🫣 Apprêtez-vous à entrer dans un monde nouveau...</p>
+      <p id="msg2" class="message hidden" aria-live="polite">🤫 Ainsi commence le début d'une longue vie...</p>
+      <p id="msg3" class="message hidden" aria-live="polite">Voulez-vous entrer dans le nouveau monde ?</p>
+    </div>
+
+    <div id="buttons" class="call-to-action hidden" role="group" aria-labelledby="msg3">
+      <button class="btn enter" data-action="enter">Entrer</button>
+      <button class="btn exit" data-action="exit">Sortir</button>
+    </div>
+
+    <div id="final-message" class="welcome-banner hidden" role="alert">
+      <h2>BIENVENUE DANS LE NOUVEAU MONDE</h2>
+      <small>Préparez-vous pour l'aventure !</small>
+    </div>
+
+    <section id="auth-container" class="auth-container hidden" aria-label="Formulaire de Connexion">
+      <p>Chargement du formulaire de connexion...</p>
+    </section>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 RGSC. Tous droits réservés.</p>
+  </footer>
+
+  <script type="module" src="assets/js/login.js"></script>
+</body>
+</html>
+ 
